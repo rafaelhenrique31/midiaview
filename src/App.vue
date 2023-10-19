@@ -1,16 +1,15 @@
 <script setup lang="ts">
-import HomePage from '../src/pages/Home/HomePage.vue'
-
+import HomePage from "../src/pages/Home/HomePage.vue";
 </script>
 
 <template>
-
-  <div>
+  <div class="home">
     <HomePage></HomePage>
   </div>
-
 </template>
 
 <style scoped lang="scss">
-
+.home {
+  align-items: start;
+}
 </style>

@@ -5,7 +5,12 @@ export function UseCategory() {
     return await CATEGORY_CLIENT.CATEGORY.getAllCategories();
   };
 
+  const getMidiaByCategoryId = async (categoryId: number) => {
+    return await CATEGORY_CLIENT.CATEGORY.getAllMidiasByCategoryId(categoryId);
+  };
+
   return {
     getAllCategories,
+    getMidiaByCategoryId,
   };
 }
