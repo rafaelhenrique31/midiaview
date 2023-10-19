@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/vue-query": "^5.0.0",
+    "axios": "^1.5.1",
     "install": "^0.13.0",
     "npm": "^10.2.1",
     "pinia": "^2.1.7",
