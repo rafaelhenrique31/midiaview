@@ -53,23 +53,35 @@ onBeforeMount(async () => {
 });
 </script>
 <template>
-  <div class="geral" v-for="category in categories" :key="category.id">
+  <div class="category" v-for="category in categories" :key="category.id">
     <h1>{{ category.name }}</h1>
     <div class="midia-container">
-      <div class="midia" v-for="midia in category.midias" :key="midia.id">
-        <img
-          @click="toggleIsOpen(midia.linkVideo, midia.name, midia.description)"
-          class="bannerImage"
-          :src="midia.bannerImage"
-        />
-        <Modal
-          :open="isOpen"
-          :linkVideo="selectedMedia"
-          :title="title"
-          :description="description"
-          @close="isOpen = !isOpen"
-        >
-        </Modal>
+      <div
+        v-if="category.midias.length > 0"
+        class="midia"
+        v-for="midia in category.midias"
+        :key="midia.id"
+      >
+        <div>
+          <img
+            @click="
+              toggleIsOpen(midia.linkVideo, midia.name, midia.description)
+            "
+            class="bannerImage"
+            :src="midia.bannerImage"
+          />
+          <Modal
+            :open="isOpen"
+            :linkVideo="selectedMedia"
+            :title="title"
+            :description="description"
+            @close="isOpen = !isOpen"
+          >
+          </Modal>
+        </div>
+      </div>
+      <div v-else>
+        <h1>Nenhuma midia encontrada para esta categoria</h1>
       </div>
     </div>
   </div>
@@ -82,37 +94,19 @@ onBeforeMount(async () => {
   min-width: 400px;
   padding: 5px;
 }
-
 .midia-container {
   display: flex;
   flex-wrap: wrap;
 }
-
-.geral {
+.body {
+  background-color: aqua;
+}
+.category {
   padding: 5px 20px;
 }
 
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
 }
 </style>

@@ -1,13 +1,10 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
 const props = defineProps<{
   open: boolean;
   linkVideo: string;
   title: string;
   description: string;
 }>();
-const videoPlayer = ref(null);
 </script>
 
 <template>
@@ -15,12 +12,12 @@ const videoPlayer = ref(null);
     <div class="vue-modal" v-show="props.open">
       <transition name="drop-in">
         <div>
+          <button type="button" @click="$emit('close')">Fechar</button>
           <h1>{{ props.title }}</h1>
           <div class="vue-modal-content">
-            <video ref="videoPlayer" controls :src="props.linkVideo"></video>
+            <video controls :src="props.linkVideo"></video>
             <slot />
             <h1>{{ props.description }}</h1>
-            <button type="button" @click="$emit('close')">Close</button>
           </div>
         </div>
       </transition>
@@ -59,13 +56,13 @@ const videoPlayer = ref(null);
 }
 
 button {
+  float: right;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
