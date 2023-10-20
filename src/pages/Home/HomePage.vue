@@ -7,6 +7,8 @@ import Modal from "../../components/Modal/Modal.vue";
 const UseCategoryStore = UseCategory();
 const isOpen = ref(false);
 const selectedMedia = ref("");
+const title = ref("");
+const description = ref("");
 
 const categories = ref<CategoryGetResponse[]>([]);
 const midias = ref<MidiaGetResponse[]>([]);
@@ -34,11 +36,16 @@ async function GetMidias(categoryId: number) {
   } catch (error) {}
 }
 
-function toggleIsOpen(id: string) {
+function toggleIsOpen(
+  linkVideo: string,
+  titleMidia: string,
+  descriptionMidia: string
+) {
   console.log(categories.value);
   isOpen.value = !isOpen.value;
-
-  selectedMedia.value = id;
+  selectedMedia.value = linkVideo;
+  title.value = titleMidia;
+  description.value = descriptionMidia;
 }
 
 onBeforeMount(async () => {
@@ -51,13 +58,15 @@ onBeforeMount(async () => {
     <div class="midia-container">
       <div class="midia" v-for="midia in category.midias" :key="midia.id">
         <img
-          @click="toggleIsOpen(midia.linkVideo)"
+          @click="toggleIsOpen(midia.linkVideo, midia.name, midia.description)"
           class="bannerImage"
           :src="midia.bannerImage"
         />
         <Modal
           :open="isOpen"
           :linkVideo="selectedMedia"
+          :title="title"
+          :description="description"
           @close="isOpen = !isOpen"
         >
         </Modal>
@@ -69,6 +78,9 @@ onBeforeMount(async () => {
 <style scoped lang="scss">
 .bannerImage {
   max-width: 350px;
+  height: 250px;
+  min-width: 400px;
+  padding: 5px;
 }
 
 .midia-container {
