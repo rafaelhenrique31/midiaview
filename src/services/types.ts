@@ -3,6 +3,7 @@ export interface CategoryGetResponse {
   name: string;
   bannerImage: string;
   active: boolean;
+  midias: MidiaGetResponse[];
 }
 
 export interface MidiaGetResponse {
@@ -12,8 +13,8 @@ export interface MidiaGetResponse {
   active: boolean;
   createdAt: Date;
   isSerie: boolean;
-  bannerImage: boolean;
-  linkVideo: boolean;
+  bannerImage: string;
+  linkVideo: string;
   category: category;
 }
 
