@@ -108,6 +108,7 @@ onBeforeMount(async () => {
   height: 250px;
   min-width: 400px;
   padding: 5px;
+  cursor: pointer;
 }
 .midia-container {
   display: flex;
