@@ -2,8 +2,11 @@
 import { onBeforeMount, ref } from "vue";
 import { CategoryGetResponse, MidiaGetResponse } from "../../services/types";
 import { UseCategory } from "../../Composables/UseCategory";
+import Modal from "../../components/Modal/Modal.vue";
 
 const UseCategoryStore = UseCategory();
+const isOpen = ref(false);
+const selectedMedia = ref("");
 
 const categories = ref<CategoryGetResponse[]>([]);
 const midias = ref<MidiaGetResponse[]>([]);
@@ -22,7 +25,6 @@ async function GetCategories() {
     }
   } catch (error) {}
 }
-
 async function GetMidias(categoryId: number) {
   try {
     var response = await UseCategoryStore.getMidiaByCategoryId(categoryId);
@@ -32,6 +34,13 @@ async function GetMidias(categoryId: number) {
   } catch (error) {}
 }
 
+function toggleIsOpen(id: string) {
+  console.log(categories.value);
+  isOpen.value = !isOpen.value;
+
+  selectedMedia.value = id;
+}
+
 onBeforeMount(async () => {
   await GetCategories();
 });
@@ -39,8 +48,20 @@ onBeforeMount(async () => {
 <template>
   <div class="geral" v-for="category in categories" :key="category.id">
     <h1>{{ category.name }}</h1>
-    <div v-for="midia in category.midias" :key="midia.id">
-      <img class="bannerImage" :src="midia.bannerImage" />
+    <div class="midia-container">
+      <div class="midia" v-for="midia in category.midias" :key="midia.id">
+        <img
+          @click="toggleIsOpen(midia.linkVideo)"
+          class="bannerImage"
+          :src="midia.bannerImage"
+        />
+        <Modal
+          :open="isOpen"
+          :linkVideo="selectedMedia"
+          @close="isOpen = !isOpen"
+        >
+        </Modal>
+      </div>
     </div>
   </div>
 </template>
@@ -48,7 +69,11 @@ onBeforeMount(async () => {
 <style scoped lang="scss">
 .bannerImage {
   max-width: 350px;
-  background-color: red;
+}
+
+.midia-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .geral {
