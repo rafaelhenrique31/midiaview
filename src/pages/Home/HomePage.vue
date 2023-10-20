@@ -9,6 +9,7 @@ const isOpen = ref(false);
 const selectedMedia = ref("");
 const title = ref("");
 const description = ref("");
+const showTooltip = ref(false);
 
 const categories = ref<CategoryGetResponse[]>([]);
 const midias = ref<MidiaGetResponse[]>([]);
@@ -64,12 +65,17 @@ onBeforeMount(async () => {
       >
         <div>
           <img
+            @mouseover="showTooltip = true"
+            @mouseleave="showTooltip = false"
             @click="
               toggleIsOpen(midia.linkVideo, midia.name, midia.description)
             "
             class="bannerImage"
             :src="midia.bannerImage"
           />
+          <div v-if="showTooltip" class="tooltip">
+            {{ midia.name }}
+          </div>
           <Modal
             :open="isOpen"
             :linkVideo="selectedMedia"
@@ -88,6 +94,15 @@ onBeforeMount(async () => {
 </template>
 
 <style scoped lang="scss">
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
 .bannerImage {
   max-width: 350px;
   height: 250px;
