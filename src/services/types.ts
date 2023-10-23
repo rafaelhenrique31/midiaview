@@ -16,6 +16,7 @@ export interface MidiaGetResponse {
   bannerImage: string;
   linkVideo: string;
   category: category;
+  showTooltip: boolean | undefined;
 }
 
 export interface category {
